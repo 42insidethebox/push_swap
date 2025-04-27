@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:43:07 by procha-r          #+#    #+#             */
-/*   Updated: 2025/01/31 08:14:47 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:18:04 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	find_min(t_stack *stack)
 	return (min);
 }
 
-/*
 int	find_second_min(t_stack *stack)
 {
 	t_node	*current;
@@ -97,9 +96,9 @@ int	find_second_min(t_stack *stack)
 	int		second_min;
 
 	if (!stack || !stack->top || !stack->top->next)
-		return (214748347);
+		return (2147483647);
 	min = find_min(stack);
-	second_min = 214748347;
+	second_min = 2147483647;
 	current = stack->top;
 	while (current)
 	{
@@ -107,8 +106,7 @@ int	find_second_min(t_stack *stack)
 			second_min = current->value;
 		current = current->next;
 	}
-	if (second_min == INT_MAX)
+	if (second_min == 2147483647)
 		return (min);
 	return (second_min);
 }
-*/

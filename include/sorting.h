@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:57:16 by procha-r          #+#    #+#             */
-/*   Updated: 2025/01/29 21:59:55 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 16:48:43 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		find_second_min(t_stack *stack);
 int		find_max(t_stack *stack);
 int		find_median(t_stack *a, int chunk, int chunk_size);
 int		stack_contains_chunk(t_stack *a, int chunk, int chunk_size);
-void	quicksort(int *arr, int low, int high);
+void	quick_sort(int *arr, int low, int high);
 int		partition(int *arr, int low, int high);
 
 #endif

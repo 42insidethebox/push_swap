@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_rotate.c                                       :+:      :+:    :+:   */
+/*   sorting_helpers_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 23:16:07 by procha-r          #+#    #+#             */
-/*   Updated: 2025/04/27 17:20:43 by pedroribeir      ###   ########.fr       */
+/*   Created: 2025/04/27 16:49:49 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 16:50:48 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "operations.h"
+#include "push_swap.h"
 
-void	ra(t_stack *a)
+int	stack_contains_chunk(t_stack *a, int chunk, int chunk_size)
 {
-	rotate_stack(a);
-	write(1, "ra\n", 3);
-}
+	t_node	*current;
+	int		start;
+	int		end;
 
-void	rb(t_stack *b)
-{
-	rotate_stack(b);
-	write(1, "rb\n", 3);
-}
-
-void	rr(t_stack *a, t_stack *b)
-{
-	rotate_stack(a);
-	rotate_stack(b);
-	write(1, "rr\n", 3);
+	if (!a || is_empty(a))
+		return (0);
+	start = chunk * chunk_size;
+	end = (chunk + 1) * chunk_size;
+	current = a->top;
+	while (current)
+	{
+		if (current->value >= start && current->value < end)
+			return (1);
+		current = current->next;
+	}
+	return (0);
 }

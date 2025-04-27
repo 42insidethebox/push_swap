@@ -1,0 +1,1117 @@
+===== File: ./tests/test_error_handling.c =====
+
+
+
+===== File: ./tests/test_stack_init.c =====
+
+
+
+===== File: ./tests/test_sorting.c =====
+
+
+
+===== File: ./tests/test_helpers.c =====
+
+
+
+===== File: ./src/parse/parse_input.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 22:25:56 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 20:15:14 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	is_valid_int(const char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!arg || arg[0] == '\0')
+		return (0);
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
+	if (arg[i] == '\0')
+		return (0);
+	while (arg[i])
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	check_duplicates(t_stack *a)
+{
+	t_node	*current;
+	t_node	*runner;
+
+	if (!a || !a->top)
+		return (0);
+	current = a->top;
+	while (current)
+	{
+		runner = current->next;
+		while (runner)
+		{
+			if (runner->value == current->value)
+				return (1);
+			runner = runner->next;
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
+int	parse_input(int argc, char **argv, t_stack *a)
+{
+	int	i;
+	int	num;
+
+	if (argc < 2)
+		return (-1);
+	i = argc - 1;
+	while (i >= 1)
+	{
+		if (!is_valid_int(argv[i]))
+			return (-1);
+		if (!safe_atoi(argv[i], &num))
+			return (-1);
+		push_stack(a, (int)num);
+		i--;
+	}
+	if (check_duplicates(a))
+		return (-1);
+	return (0);
+}
+
+
+
+===== File: ./src/algo/big_sorts.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   big_sorts.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/31 00:03:06 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 21:41:43 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sorting.h"
+#include "operations.h"
+
+static int	calculate_max_bits(t_stack *a)
+{
+	int	max_index;
+	int	bits;
+
+	max_index = a->size - 1;
+	bits = 0;
+	while ((max_index >> bits) != 0)
+		bits++;
+	return (bits);
+}
+
+static void	radix_pass(t_stack *a, t_stack *b, int bit_index)
+{
+	int	size;
+	int	bit;
+
+	size = a->size;
+	while (size > 0)
+	{
+		bit = (a->top->index >> bit_index) & 1;
+		if (bit == 0)
+			pb(a, b);
+		else
+			ra(a);
+		size--;
+	}
+	while (!is_empty(b))
+		pa(a, b);
+}
+
+void	sort_big(t_stack *a, t_stack *b)
+{
+	int	max_bits;
+	int	i;
+
+	if (!a)
+		return ;
+	max_bits = calculate_max_bits(a);
+	i = 0;
+	while (i < max_bits)
+	{
+		radix_pass(a, b, i);
+		i++;
+	}
+}
+
+
+
+===== File: ./src/algo/small_sorts.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   small_sorts.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 23:33:38 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 20:11:24 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sorting.h"
+#include "operations.h"
+
+int	find_position(t_stack *a, int val)
+{
+	t_node	*current;
+	int		pos;
+
+	pos = 0;
+	current = a->top;
+	while (current)
+	{
+		if (current->value == val)
+			return (pos);
+		current = current->next;
+		pos++;
+	}
+	return (-1);
+}
+
+void	sort_three(t_stack *a)
+{
+	int	first;
+	int	second;
+	int	third;
+
+	first = a->top->value;
+	second = a->top->next->value;
+	third = a->top->next->next->value;
+	if (first < second && second < third)
+		return ;
+	if (first < third && third < second)
+	{
+		sa(a);
+		ra(a);
+	}
+	else if (second < first && first < third)
+		sa(a);
+	else if (third < first && first < second)
+		rra(a);
+	else if (second < third && third < first)
+		ra(a);
+	else if (third < second && second < first)
+	{
+		sa(a);
+		rra(a);
+	}
+}
+
+void	sort_five(t_stack *a, t_stack *b)
+{
+	int	min;
+	int	pos;
+
+	while (a->size > 3)
+	{
+		min = find_min(a);
+		pos = find_position(a, min);
+		if (pos <= a->size / 2)
+		{
+			while (a->top->value != min)
+				ra(a);
+		}
+		else
+		{
+			while (a->top->value != min)
+				rra(a);
+		}
+		pb(a, b);
+	}
+	sort_three(a);
+	while (!is_empty(b))
+		pa(a, b);
+}
+
+
+
+===== File: ./src/algo/medium_sorts.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   medium_sorts.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 23:55:52 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 16:48:30 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sorting.h"
+#include "operations.h"
+
+int	*extract_values(t_stack *a, int chunk, int chunk_size, int *count)
+{
+	int		*values;
+	int		i;
+	t_node	*current;
+
+	values = malloc(sizeof(int) * chunk_size);
+	if (!values)
+		return (NULL);
+	current = a->top;
+	i = 0;
+	while (current != NULL && i < chunk_size)
+	{
+		if (current->value >= chunk * chunk_size
+			&& current->value < (chunk + 1) * chunk_size)
+		{
+			values[i] = current->value;
+			i++;
+		}
+		current = current->next;
+	}
+	*count = i;
+	return (values);
+}
+
+int	find_median(t_stack *a, int chunk, int chunk_size)
+{
+	int		*values;
+	int		count;
+	int		median;
+
+	values = extract_values(a, chunk, chunk_size, &count);
+	if (!values || count == 0)
+	{
+		free(values);
+		return (0);
+	}
+	quick_sort(values, 0, count - 1);
+	median = values[count / 2];
+	free(values);
+	return (median);
+}
+
+void	push_chunk_to_b(t_stack *a, t_stack *b, int chunk, int chunk_size)
+{
+	int	median;
+
+	median = find_median(a, chunk, chunk_size);
+	while (stack_contains_chunk(a, chunk, chunk_size))
+	{
+		if (a->top->value <= median)
+			pb(a, b);
+		else
+			ra(a);
+	}
+}
+
+void	move_back_to_a(t_stack *a, t_stack *b)
+{
+	while (!is_empty(b))
+	{
+		if (b->top->value == find_max(b))
+			pa(a, b);
+		else
+			rb(b);
+	}
+}
+
+void	sort_medium(t_stack *a, t_stack *b)
+{
+	int	chunk_size;
+	int	total_chunks;
+	int	current_chunk;
+
+	if (a == NULL || b == NULL || a->size <= 5)
+		return ;
+	chunk_size = a->size / 5;
+	if (a->size % chunk_size == 0)
+		total_chunks = 5;
+	else
+		total_chunks = 6;
+	current_chunk = 0;
+	while (current_chunk < total_chunks)
+	{
+		push_chunk_to_b(a, b, current_chunk, chunk_size);
+		current_chunk++;
+	}
+	move_back_to_a(a, b);
+}
+
+
+
+===== File: ./src/utils/sorting_helpers_2.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sorting_helpers_2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 16:49:49 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 16:50:48 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	stack_contains_chunk(t_stack *a, int chunk, int chunk_size)
+{
+	t_node	*current;
+	int		start;
+	int		end;
+
+	if (!a || is_empty(a))
+		return (0);
+	start = chunk * chunk_size;
+	end = (chunk + 1) * chunk_size;
+	current = a->top;
+	while (current)
+	{
+		if (current->value >= start && current->value < end)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
+
+
+===== File: ./src/utils/is_sorted.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_sorted.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 20:36:10 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 20:36:24 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	is_sorted(t_stack *stack)
+{
+	t_node	*current;
+
+	if (!stack || !stack->top)
+		return (1);
+	current = stack->top;
+	while (current && current->next)
+	{
+		if (current->value > current->next->value)
+			return (0);
+		current = current->next;
+	}
+	return (1);
+}
+
+
+
+===== File: ./src/utils/assign_index.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   assign_index.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 21:38:06 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 21:39:42 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+#include <stdlib.h>
+
+static int	*copy_stack_values(t_stack *stack, int size)
+{
+	int		*values;
+	t_node	*current;
+	int		i;
+
+	values = malloc(sizeof(int) * size);
+	if (!values)
+		return (NULL);
+	current = stack->top;
+	i = 0;
+	while (current)
+	{
+		values[i] = current->value;
+		current = current->next;
+		i++;
+	}
+	return (values);
+}
+
+static int	find_index(int *array, int size, int target)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (array[i] == target)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	assign_index(t_stack *stack)
+{
+	int		*sorted_values;
+	t_node	*current;
+	int		size;
+	int		index;
+
+	if (!stack)
+		return ;
+	size = stack->size;
+	sorted_values = copy_stack_values(stack, size);
+	if (!sorted_values)
+		handle_exit(stack, NULL);
+	quick_sort(sorted_values, 0, size - 1);
+	current = stack->top;
+	while (current)
+	{
+		index = find_index(sorted_values, size, current->value);
+		current->index = index;
+		current = current->next;
+	}
+	free(sorted_values);
+}
+
+
+
+===== File: ./src/utils/error_handling.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/31 08:03:34 by procha-r          #+#    #+#             */
+/*   Updated: 2025/01/31 08:11:44 by procha-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	print_error(void)
+{
+	write(2, "Error\n", 6);
+}
+
+void	handle_exit(t_stack *a, t_stack *b)
+{
+	if (a)
+		free_stack(a);
+	if (b)
+		free_stack(b);
+	exit(EXIT_FAILURE);
+}
+
+
+
+===== File: ./src/utils/parsing_helpers.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 20:03:08 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 20:16:26 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static int	handle_sign(const char *str, int *i)
+{
+	int	sign;
+
+	sign = 1;
+	if (str[*i] == '-' || str[*i] == '+')
+	{
+		if (str[*i] == '-')
+			sign = -1;
+		(*i)++;
+	}
+	return (sign);
+}
+
+int	safe_atoi(const char *str, int *out)
+{
+	long	result;
+	int		sign;
+	int		i;
+
+	if (!str || !out)
+		return (0);
+	result = 0;
+	i = 0;
+	sign = handle_sign(str, &i);
+	if (str[i] == '\0')
+		return (0);
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		result = result * 10 + (str[i] - '0');
+		if ((sign == 1 && result > 2147483647)
+			|| (sign == -1 && result > 2147483648))
+			return (0);
+		i++;
+	}
+	*out = (int)(result * sign);
+	return (1);
+}
+
+
+
+===== File: ./src/utils/debug.c =====
+
+
+
+===== File: ./src/utils/ops_rotate_helpers.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_rotate_helpers.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 17:16:13 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 17:17:18 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	rotate_stack(t_stack *stack)
+{
+	t_node	*temp;
+	t_node	*last;
+
+	if (!stack || stack->size < 2)
+		return ;
+	temp = stack->top;
+	stack->top = temp->next;
+	temp->next = NULL;
+	last = stack->top;
+	while (last->next)
+		last = last->next;
+	last->next = temp;
+}
+
+void	reverse_rotate_stack(t_stack *stack)
+{
+	t_node	*prev;
+	t_node	*last;
+
+	if (!stack || stack->size < 2)
+		return ;
+	prev = NULL;
+	last = stack->top;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	if (prev)
+		prev->next = NULL;
+	last->next = stack->top;
+	stack->top = last;
+}
+
+
+
+===== File: ./src/utils/sorting_helpers.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sorting_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 22:43:07 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 18:18:04 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sorting.h"
+#include <stdlib.h>
+
+int	partition(int *arr, int low, int high)
+{
+	int	pivot;
+	int	i;
+	int	j;
+	int	temp;
+
+	pivot = arr[high];
+	i = low - 1;
+	j = low;
+	while (j < high)
+	{
+		if (arr[j] < pivot)
+		{
+			i++;
+			temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+		j++;
+	}
+	temp = arr[i + 1];
+	arr[i + 1] = arr[high];
+	arr[high] = temp;
+	return (i + 1);
+}
+
+void	quick_sort(int *arr, int low, int high)
+{
+	int	pivot;
+
+	if (low < high)
+	{
+		pivot = partition(arr, low, high);
+		quick_sort(arr, low, pivot - 1);
+		quick_sort(arr, pivot +1, high);
+	}
+}
+
+int	find_max(t_stack *stack)
+{
+	t_node	*current;
+	int		max;
+
+	if (!stack || !stack->top)
+		return (-2147483648);
+	current = stack->top;
+	max = current->value;
+	while (current)
+	{
+		if (current->value > max)
+			max = current->value;
+		current = current->next;
+	}
+	return (max);
+}
+
+int	find_min(t_stack *stack)
+{
+	t_node	*current;
+	int		min;
+
+	if (!stack || !stack->top)
+		return (2147483647);
+	current = stack->top;
+	min = current->value;
+	current = current->next;
+	while (current)
+	{
+		if (current->value < min)
+			min = current->value;
+		current = current->next;
+	}
+	return (min);
+}
+
+int	find_second_min(t_stack *stack)
+{
+	t_node	*current;
+	int		min;
+	int		second_min;
+
+	if (!stack || !stack->top || !stack->top->next)
+		return (2147483647);
+	min = find_min(stack);
+	second_min = 2147483647;
+	current = stack->top;
+	while (current)
+	{
+		if (current->value > min && current->value < second_min)
+			second_min = current->value;
+		current = current->next;
+	}
+	if (second_min == 2147483647)
+		return (min);
+	return (second_min);
+}
+
+
+
+===== File: ./src/operations/ops_reverse_rotate.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_reverse_rotate.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 23:29:09 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 17:22:16 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "operations.h"
+
+void	rra(t_stack *a)
+{
+	reverse_rotate_stack(a);
+	write(1, "rra\n", 4);
+}
+
+void	rrb(t_stack *b)
+{
+	reverse_rotate_stack(b);
+	write(1, "rrb\n", 4);
+}
+
+void	rrr(t_stack *a, t_stack *b)
+{
+	reverse_rotate_stack(a);
+	reverse_rotate_stack(b);
+	write(1, "rrr\n", 4);
+}
+
+
+
+===== File: ./src/operations/ops_rotate.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_rotate.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 23:16:07 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 17:20:43 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "operations.h"
+
+void	ra(t_stack *a)
+{
+	rotate_stack(a);
+	write(1, "ra\n", 3);
+}
+
+void	rb(t_stack *b)
+{
+	rotate_stack(b);
+	write(1, "rb\n", 3);
+}
+
+void	rr(t_stack *a, t_stack *b)
+{
+	rotate_stack(a);
+	rotate_stack(b);
+	write(1, "rr\n", 3);
+}
+
+
+
+===== File: ./src/operations/ops_push.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_push.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 22:56:28 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 17:46:26 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "operations.h"
+
+void	pa(t_stack *a, t_stack *b)
+{
+	int	val;
+
+	if (is_empty(b))
+		return ;
+	val = pop_stack(b);
+	push_stack(a, val);
+	write(1, "pa\n", 3);
+}
+
+void	pb(t_stack *a, t_stack *b)
+{
+	int	val;
+
+	if (is_empty(a))
+		return ;
+	val = pop_stack(a);
+	push_stack(b, val);
+	write(1, "pb\n", 3);
+}
+
+
+
+===== File: ./src/operations/ops_swap.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_swap.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 23:11:25 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 18:30:11 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "operations.h"
+
+static void	silent_swap(t_stack *stack)
+{
+	int	temp;
+
+	if (is_empty(stack) || stack->size < 2)
+		return ;
+	temp = stack->top->value;
+	stack->top->value = stack->top->next->value;
+	stack->top->next->value = temp;
+}
+
+void	sa(t_stack *a)
+{
+	silent_swap(a);
+	write(1, "sa\n", 3);
+}
+
+void	sb(t_stack *b)
+{
+	silent_swap(b);
+	write(1, "sb\n", 3);
+}
+
+void	ss(t_stack *a, t_stack *b)
+{
+	silent_swap(a);
+	silent_swap(b);
+	write(1, "ss\n", 3);
+}
+
+
+
+===== File: ./src/main.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 21:30:04 by procha-r          #+#    #+#             */
+/*   Updated: 2025/04/27 21:39:30 by pedroribeir      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static void	sort_stack(t_stack *a, t_stack *b)
+{
+	if (a->size == 2)
+	{
+		if (a->top->value > a->top->next->value)
+			sa(a);
+	}
+	else if (a->size == 3)
+		sort_three(a);
+	else if (a->size > 3 && a->size <= 5)
+		sort_five(a, b);
+	else if (a->size <= 100)
+		sort_medium(a, b);
+	else
+		sort_big(a, b);
+}
+
+int	main(int argc, char **argv)
+{
+	t_stack	a;
+	t_stack	b;
+	int		parse_result;
+
+	if (argc == 1)
+		return (0);
+	init_stack(&a);
+	init_stack(&b);
+	parse_result = parse_input(argc, argv, &a);
+	if (parse_result == -1)
+	{
+		print_error();
+		handle_exit(&a, &b);
+	}
+	if (is_sorted(&a))
+	{
+		free_stack(&a);
+		free_stack(&b);
+		return (0);
+	}
+	assign_index(&a);
+	sort_stack(&a, &b);
+	free_stack(&a);
+	free_stack(&b);
+	return (0);
+}
+
+
+
+===== File: ./src/stack/stack_init.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 22:01:18 by procha-r          #+#    #+#             */
+/*   Updated: 2025/01/29 22:05:17 by procha-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "stacks.h"
+#include <stdlib.h>
+
+void	init_stack(t_stack *stack)
+{
+	if (!stack)
+		return ;
+	stack->top = NULL;
+	stack->size = 0;
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*current;
+	t_node	*temp;
+
+	if (!stack)
+		return ;
+	current = stack->top;
+	while (current)
+	{
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
+	stack->top = NULL;
+	stack->size = 0;
+}
+
+
+
+===== File: ./src/stack/stack_utils.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 22:18:08 by procha-r          #+#    #+#             */
+/*   Updated: 2025/01/31 08:09:46 by procha-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "stacks.h"
+
+int	stack_size(t_stack *stack)
+{
+	return (stack->size);
+}
+
+int	is_empty(t_stack *stack)
+{
+	if (!stack)
+		return (1);
+	return (stack->size == 0);
+}
+
+int	peek(t_stack *stack)
+{
+	if (is_empty(stack))
+		return (0);
+	return (stack->top->value);
+}
+
+
+
+===== File: ./src/stack/stack_ops.c =====
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_ops.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 22:22:13 by procha-r          #+#    #+#             */
+/*   Updated: 2025/01/31 08:09:39 by procha-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "stacks.h"
+#include "stdlib.h"
+
+void	push_stack(t_stack *stack, int val)
+{
+	t_node	*new_node;
+
+	if (!stack)
+		return ;
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return ;
+	new_node->value = val;
+	new_node->next = stack->top;
+	stack->top = new_node;
+	stack->size++;
+}
+
+int	pop_stack(t_stack *stack)
+{
+	t_node	*temp;
+	int		popped_value;
+
+	if (!stack || !stack->top)
+		return (0);
+	temp = stack->top;
+	popped_value = temp->value;
+	stack->top = temp->next;
+	free(temp);
+	stack->size--;
+	return (popped_value);
+}
+
+
+

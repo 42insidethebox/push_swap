@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:25:56 by procha-r          #+#    #+#             */
-/*   Updated: 2025/01/31 08:17:08 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 20:15:14 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,20 @@ int	check_duplicates(t_stack *a)
 
 int	parse_input(int argc, char **argv, t_stack *a)
 {
-	int		i;
-	long	num;
+	int	i;
+	int	num;
 
 	if (argc < 2)
 		return (-1);
-	i = 1;
-	while (i < argc)
+	i = argc - 1;
+	while (i >= 1)
 	{
 		if (!is_valid_int(argv[i]))
 			return (-1);
-		num = atol(argv[i]);
-		if (num < -2147483648 || num > 2147483647)
+		if (!safe_atoi(argv[i], &num))
 			return (-1);
 		push_stack(a, (int)num);
-		i++;
+		i--;
 	}
 	if (check_duplicates(a))
 		return (-1);

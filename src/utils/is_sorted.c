@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_rotate.c                                       :+:      :+:    :+:   */
+/*   is_sorted.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 23:16:07 by procha-r          #+#    #+#             */
-/*   Updated: 2025/04/27 17:20:43 by pedroribeir      ###   ########.fr       */
+/*   Created: 2025/04/27 20:36:10 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/04/27 20:36:24 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "operations.h"
+#include "push_swap.h"
 
-void	ra(t_stack *a)
+int	is_sorted(t_stack *stack)
 {
-	rotate_stack(a);
-	write(1, "ra\n", 3);
-}
+	t_node	*current;
 
-void	rb(t_stack *b)
-{
-	rotate_stack(b);
-	write(1, "rb\n", 3);
-}
-
-void	rr(t_stack *a, t_stack *b)
-{
-	rotate_stack(a);
-	rotate_stack(b);
-	write(1, "rr\n", 3);
+	if (!stack || !stack->top)
+		return (1);
+	current = stack->top;
+	while (current && current->next)
+	{
+		if (current->value > current->next->value)
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 23:55:52 by procha-r          #+#    #+#             */
-/*   Updated: 2025/03/04 13:09:59 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/04/27 16:48:30 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	find_median(t_stack *a, int chunk, int chunk_size)
 		free(values);
 		return (0);
 	}
-	quicksort(values, 0, count - 1);
+	quick_sort(values, 0, count - 1);
 	median = values[count / 2];
 	free(values);
 	return (median);

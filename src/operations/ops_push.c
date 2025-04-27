@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ops_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:56:28 by procha-r          #+#    #+#             */
-/*   Updated: 2025/01/31 08:05:51 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:46:26 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	pa(t_stack *a, t_stack *b)
 		return ;
 	val = pop_stack(b);
 	push_stack(a, val);
+	write(1, "pa\n", 3);
 }
 
 void	pb(t_stack *a, t_stack *b)
@@ -30,4 +31,5 @@ void	pb(t_stack *a, t_stack *b)
 		return ;
 	val = pop_stack(a);
 	push_stack(b, val);
+	write(1, "pb\n", 3);
 }
