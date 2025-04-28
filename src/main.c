@@ -6,7 +6,7 @@
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:30:04 by procha-r          #+#    #+#             */
-/*   Updated: 2025/04/27 21:39:30 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/04/28 10:56:16 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	sort_stack(t_stack *a, t_stack *b)
 	else if (a->size <= 100)
 		sort_medium(a, b);
 	else
-		sort_big(a, b);
+		sort_large(a, b);
 }
 
 int	main(int argc, char **argv)

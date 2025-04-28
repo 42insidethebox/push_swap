@@ -6,7 +6,7 @@
 #    By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 16:14:20 by procha-r          #+#    #+#              #
-#    Updated: 2025/04/27 21:39:07 by pedroribeir      ###   ########.fr        #
+#    Updated: 2025/04/28 10:59:03 by pedroribeir      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = \
 	src/algo/small_sorts.c \
 	src/algo/medium_sorts.c \
 	src/algo/big_sorts.c \
+	src/algo/sort_large.c \
 	src/operations/ops_swap.c \
 	src/operations/ops_push.c \
 	src/operations/ops_rotate.c \
