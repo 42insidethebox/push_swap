@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+         #
+#    By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 16:14:20 by procha-r          #+#    #+#              #
-#    Updated: 2025/04/28 10:59:03 by pedroribeir      ###   ########.fr        #
+#    Updated: 2025/04/28 17:10:31 by procha-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRCS = \
 	src/utils/assign_index.c \
 	src/utils/sorting_helpers.c \
 	src/utils/sorting_helpers_2.c \
+	src/utils/sorting_helpers_3.c \
+	src/utils/sorting_helpers_4.c \
 	src/utils/ops_rotate_helpers.c \
 	src/utils/is_sorted.c \
 	src/utils/error_handling.c \

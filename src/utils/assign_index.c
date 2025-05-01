@@ -3,70 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   assign_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:38:06 by pedroribeir       #+#    #+#             */
-/*   Updated: 2025/04/27 21:39:42 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/01 20:03:34 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdlib.h>
 
-static int	*copy_stack_values(t_stack *stack, int size)
+static int	compare_ints(const void *a, const void *b)
 {
-	int		*values;
-	t_node	*current;
-	int		i;
-
-	values = malloc(sizeof(int) * size);
-	if (!values)
-		return (NULL);
-	current = stack->top;
-	i = 0;
-	while (current)
-	{
-		values[i] = current->value;
-		current = current->next;
-		i++;
-	}
-	return (values);
-}
-
-static int	find_index(int *array, int size, int target)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (array[i] == target)
-			return (i);
-		i++;
-	}
-	return (-1);
+	return (*(int *)a - *(int *)b);
 }
 
 void	assign_index(t_stack *stack)
 {
-	int		*sorted_values;
+	int		*values;
 	t_node	*current;
-	int		size;
-	int		index;
+	int		i, j;
 
-	if (!stack)
+	if (!stack || stack->size == 0)
 		return ;
-	size = stack->size;
-	sorted_values = copy_stack_values(stack, size);
-	if (!sorted_values)
+
+	// 1️⃣ Allocate and copy values
+	values = malloc(sizeof(int) * stack->size);
+	if (!values)
 		handle_exit(stack, NULL);
-	quick_sort(sorted_values, 0, size - 1);
+	current = stack->top;
+	i = 0;
+	while (current)
+	{
+		values[i++] = current->value;
+		current = current->next;
+	}
+
+	// 2️⃣ Sort values
+	qsort(values, stack->size, sizeof(int), compare_ints);
+
+	// 3️⃣ Assign index to each node based on sorted array
 	current = stack->top;
 	while (current)
 	{
-		index = find_index(sorted_values, size, current->value);
-		current->index = index;
+		j = 0;
+		while (j < stack->size)
+		{
+			if (current->value == values[j])
+			{
+				current->index = j;
+				break ;
+			}
+			j++;
+		}
 		current = current->next;
 	}
-	free(sorted_values);
+
+	free(values);
 }

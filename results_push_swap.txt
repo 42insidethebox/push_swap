@@ -1,0 +1,381 @@
+==== PUSH_SWAP DEFENSE TEST ====
+Checker path: ./checker_linux
+--------------------------------
+
+🧪 Input: 1 2 3
+
+👉 Operations: 1
+✅ Checker: 
+------------------------
+
+🧪 Input: 3 2 1
+sa
+rra
+👉 Operations: 2
+✅ Checker: OK
+------------------------
+
+🧪 Input: 2 1 3
+sa
+👉 Operations: 1
+✅ Checker: OK
+------------------------
+
+🧪 Input: 3 1 2
+ra
+👉 Operations: 1
+✅ Checker: OK
+------------------------
+
+🧪 Input: 1 5 2 4 3
+pb
+ra
+pb
+sa
+pa
+pa
+👉 Operations: 6
+✅ Checker: OK
+------------------------
+
+🧪 Input: 4 3 2 1
+rra
+pb
+sa
+rra
+pa
+👉 Operations: 5
+✅ Checker: OK
+------------------------
+
+🧪 Input: 5 4 3 2 1
+rra
+pb
+rra
+pb
+sa
+rra
+pa
+pa
+👉 Operations: 8
+✅ Checker: OK
+------------------------
+
+🧪 Input: 2 3 5 1 4 6
+ra
+pb
+pb
+pb
+ra
+ra
+pa
+pa
+pa
+ra
+ra
+ra
+pb
+ra
+pb
+pa
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pa
+pa
+pa
+pa
+pa
+pa
+val=2 index=1
+val=3 index=2
+val=5 index=4
+val=1 index=0
+val=4 index=3
+val=6 index=5
+👉 Operations: 35
+✅ Checker: 
+------------------------
+
+🧪 Input: 10 9 8 7 6 5 4 3 2 1 11 12 13 14 15 16 17 18 19 20
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pb
+ra
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+pb
+pb
+ra
+pb
+pa
+pa
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+ra
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+val=10 index=9
+val=9 index=8
+val=8 index=7
+val=7 index=6
+val=6 index=5
+val=5 index=4
+val=4 index=3
+val=3 index=2
+val=2 index=1
+val=1 index=0
+val=11 index=10
+val=12 index=11
+val=13 index=12
+val=14 index=13
+val=15 index=14
+val=16 index=15
+val=17 index=16
+val=18 index=17
+val=19 index=18
+val=20 index=19
+👉 Operations: 187
+✅ Checker: 
+------------------------
+
+🧪 Input: 25 48 4 13 19 2 20 16 26 35 50
+pb
+ra
+ra
+pb
+pb
+pb
+ra
+ra
+ra
+pb
+pb
+pa
+pa
+pa
+pa
+pa
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+ra
+ra
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+pb
+ra
+pa
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pb
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+val=25 index=6
+val=48 index=9
+val=4 index=1
+val=13 index=2
+val=19 index=4
+val=2 index=0
+val=20 index=5
+val=16 index=3
+val=26 index=7
+val=35 index=8
+val=50 index=10
+👉 Operations: 82
+✅ Checker: 
+------------------------

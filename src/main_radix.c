@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_radix.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:30:04 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/01 21:19:09 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:12:40 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ static void	sort_stack(t_stack *a, t_stack *b)
 	}
 	else if (a->size == 3)
 		sort_three(a);
-	else if (a->size <= 5)
+	else if (a->size > 3 && a->size <= 5)
 		sort_five(a, b);
 	else
-		radix_sort(a, b);
+		sort_big(a, b);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -44,10 +43,6 @@ int	main(int argc, char **argv)
 	if (parse_result == -1)
 	{
 		print_error();
-		printf("DEBUG: parse_result = %d\n", parse_result);
-		printf("argc = %d\n", argc);
-		for (int i = 1; i < argc; i++)
-   			printf("argv[%d] = %s\n", i, argv[i]);
 		handle_exit(&a, &b);
 	}
 	if (is_sorted(&a))

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:25:56 by procha-r          #+#    #+#             */
-/*   Updated: 2025/04/27 20:15:14 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/01 21:11:26 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 int	is_valid_int(const char *arg)
 {
@@ -46,7 +47,10 @@ int	check_duplicates(t_stack *a)
 		while (runner)
 		{
 			if (runner->value == current->value)
+			{
+				printf("DUPLICATE FOUND: %d\n", current->value);
 				return (1);
+			}
 			runner = runner->next;
 		}
 		current = current->next;
