@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   big_sorts.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:56:46 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/01 21:17:23 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:28:21 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	radix_sort(t_stack *a, t_stack *b)
 	max_bits = 0;
 	while ((size - 1) >> max_bits)
 		max_bits++;
-
 	while (i < max_bits)
 	{
 		j = 0;

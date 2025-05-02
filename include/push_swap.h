@@ -6,7 +6,7 @@
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:52:48 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 17:22:33 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/02 18:27:27 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ typedef struct s_input
 	int		is_split;
 }	t_input;
 
-t_input normalize_argv(int argc, char **argv);
+t_input	normalize_argv(int argc, char **argv);
 
 #endif

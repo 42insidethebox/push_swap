@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:38:06 by pedroribeir       #+#    #+#             */
-/*   Updated: 2025/05/01 20:03:34 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:29:13 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ void	assign_index(t_stack *stack)
 {
 	int		*values;
 	t_node	*current;
-	int		i, j;
+	int		i;
+	int		j;
 
 	if (!stack || stack->size == 0)
 		return ;
-
-	// 1️⃣ Allocate and copy values
 	values = malloc(sizeof(int) * stack->size);
 	if (!values)
 		handle_exit(stack, NULL);
@@ -38,11 +37,7 @@ void	assign_index(t_stack *stack)
 		values[i++] = current->value;
 		current = current->next;
 	}
-
-	// 2️⃣ Sort values
 	qsort(values, stack->size, sizeof(int), compare_ints);
-
-	// 3️⃣ Assign index to each node based on sorted array
 	current = stack->top;
 	while (current)
 	{
@@ -58,6 +53,5 @@ void	assign_index(t_stack *stack)
 		}
 		current = current->next;
 	}
-
 	free(values);
 }
