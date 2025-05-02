@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+         #
+#    By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 16:14:20 by procha-r          #+#    #+#              #
-#    Updated: 2025/05/02 17:04:34 by pedroribeir      ###   ########.fr        #
+#    Updated: 2025/05/02 21:12:03 by procha-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,7 @@ SRCS = \
 	src/parse/parse_input.c \
 	src/parse/normalize_argv.c \
 	src/algo/small_sorts.c \
-	src/algo/medium_sorts.c \
 	src/algo/big_sorts.c \
-	src/algo/sort_large.c \
 	src/operations/ops_swap.c \
 	src/operations/ops_push.c \
 	src/operations/ops_rotate.c \
@@ -33,17 +31,13 @@ SRCS = \
 	src/utils/parsing_helpers.c \
 	src/utils/assign_index.c \
 	src/utils/sorting_helpers.c \
-	src/utils/sorting_helpers_2.c \
 	src/utils/sorting_helpers_3.c \
-	src/utils/sorting_helpers_4.c \
 	src/utils/ops_rotate_helpers.c \
 	src/utils/is_sorted.c \
 	src/utils/ft_split.c \
 	src/utils/ft_count_split.c \
 	src/utils/ft_free_split.c \
 	src/utils/error_handling.c \
-	src/utils/debug.c
-
 
 TEST_SRC = \
 tests/test_stack_init.c \

@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   assign_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:38:06 by pedroribeir       #+#    #+#             */
-/*   Updated: 2025/05/02 18:29:13 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/02 20:02:47 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdlib.h>
-
-static int	compare_ints(const void *a, const void *b)
-{
-	return (*(int *)a - *(int *)b);
-}
 
 void	assign_index(t_stack *stack)
 {
@@ -37,7 +32,7 @@ void	assign_index(t_stack *stack)
 		values[i++] = current->value;
 		current = current->next;
 	}
-	qsort(values, stack->size, sizeof(int), compare_ints);
+	quick_sort(values, 0, stack->size - 1);
 	current = stack->top;
 	while (current)
 	{

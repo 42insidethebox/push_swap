@@ -3,15 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   small_sorts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 23:33:38 by procha-r          #+#    #+#             */
-/*   Updated: 2025/04/27 20:11:24 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/02 21:15:03 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sorting.h"
 #include "operations.h"
+
+int	find_min(t_stack *stack)
+{
+	t_node	*current;
+	int		min;
+
+	if (!stack || !stack->top)
+		return (2147483647);
+	current = stack->top;
+	min = current->value;
+	current = current->next;
+	while (current)
+	{
+		if (current->value < min)
+			min = current->value;
+		current = current->next;
+	}
+	return (min);
+}
 
 int	find_position(t_stack *a, int val)
 {
