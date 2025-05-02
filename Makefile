@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+         #
+#    By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 16:14:20 by procha-r          #+#    #+#              #
-#    Updated: 2025/04/28 17:10:31 by procha-r         ###   ########.fr        #
+#    Updated: 2025/05/02 17:04:34 by pedroribeir      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude
 SRCS = \
 	src/main.c \
 	src/parse/parse_input.c \
+	src/parse/normalize_argv.c \
 	src/algo/small_sorts.c \
 	src/algo/medium_sorts.c \
 	src/algo/big_sorts.c \
@@ -37,6 +38,9 @@ SRCS = \
 	src/utils/sorting_helpers_4.c \
 	src/utils/ops_rotate_helpers.c \
 	src/utils/is_sorted.c \
+	src/utils/ft_split.c \
+	src/utils/ft_count_split.c \
+	src/utils/ft_free_split.c \
 	src/utils/error_handling.c \
 	src/utils/debug.c
 

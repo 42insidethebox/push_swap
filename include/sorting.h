@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:57:16 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/01 21:16:37 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:20:44 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	push_chunk_to_b_big(t_stack *a, t_stack *b, int lo, int hi);
 void	pull_b_to_a(t_stack *a, t_stack *b);
 
 void	radix_sort(t_stack *a, t_stack *b);
+void	sort_stack(t_stack *a, t_stack *b);
+
 
 #endif

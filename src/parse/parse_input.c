@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:25:56 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/01 21:11:26 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:34:35 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 int	is_valid_int(const char *arg)
 {
@@ -47,10 +46,7 @@ int	check_duplicates(t_stack *a)
 		while (runner)
 		{
 			if (runner->value == current->value)
-			{
-				printf("DUPLICATE FOUND: %d\n", current->value);
 				return (1);
-			}
 			runner = runner->next;
 		}
 		current = current->next;
@@ -58,24 +54,20 @@ int	check_duplicates(t_stack *a)
 	return (0);
 }
 
-int	parse_input(int argc, char **argv, t_stack *a)
+int	parse_input(char **args, t_stack *a, int count)
 {
 	int	i;
 	int	num;
 
-	if (argc < 2)
+	if (!args || count < 1)
 		return (-1);
-	i = argc - 1;
-	while (i >= 1)
+	i = count - 1;
+	while (i >= 0)
 	{
-		if (!is_valid_int(argv[i]))
+		if (!is_valid_int(args[i]) || !safe_atoi(args[i], &num))
 			return (-1);
-		if (!safe_atoi(argv[i], &num))
-			return (-1);
-		push_stack(a, (int)num);
+		push_stack(a, num, -1);
 		i--;
 	}
-	if (check_duplicates(a))
-		return (-1);
 	return (0);
 }

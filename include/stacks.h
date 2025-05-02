@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stacks.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:44:33 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/01 21:16:03 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:39:45 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_stack
 void	init_stack(t_stack *stack);
 void	free_stack(t_stack *stack);
 
-void	push_stack(t_stack *stack, int val);
-int		pop_stack(t_stack *stack);
+void	push_stack(t_stack *stack, int val, int index);
+t_node	*pop_stack(t_stack *stack);
 
 int		stack_size(t_stack *stack);
 int		is_empty(t_stack *stack);

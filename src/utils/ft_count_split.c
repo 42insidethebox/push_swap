@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_count_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 22:56:28 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 17:37:03 by pedroribeir      ###   ########.fr       */
+/*   Created: 2025/05/02 17:02:07 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/05/02 17:02:08 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "operations.h"
-
-void	pa(t_stack *a, t_stack *b)
+int	ft_count_split(char **split)
 {
-	t_node	*node;
-
-	node = NULL;
-	if (is_empty(b))
-		return ;
-	node = pop_stack(b);
-	push_stack(a, node->value, node->index);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b)
-{
-	t_node	*node;
-
-	if (is_empty(a))
-		return ;
-	node = pop_stack(a);
-	push_stack(b, node->value, node->index);
-	free(node);
-	write(1, "pb\n", 3);
+	int i = 0;
+	if (!split)
+		return (0);
+	while (split[i])
+		i++;
+	return (i);
 }

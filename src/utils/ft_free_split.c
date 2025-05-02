@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_push.c                                         :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 22:56:28 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 17:37:03 by pedroribeir      ###   ########.fr       */
+/*   Created: 2025/05/02 17:00:43 by pedroribeir       #+#    #+#             */
+/*   Updated: 2025/05/02 17:00:58 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "operations.h"
+#include <stdlib.h>
 
-void	pa(t_stack *a, t_stack *b)
+void	ft_free_split(char **arr)
 {
-	t_node	*node;
+	int	i;
 
-	node = NULL;
-	if (is_empty(b))
+	if (!arr)
 		return ;
-	node = pop_stack(b);
-	push_stack(a, node->value, node->index);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b)
-{
-	t_node	*node;
-
-	if (is_empty(a))
-		return ;
-	node = pop_stack(a);
-	push_stack(b, node->value, node->index);
-	free(node);
-	write(1, "pb\n", 3);
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }

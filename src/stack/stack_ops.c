@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   stack_ops.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 22:22:13 by procha-r          #+#    #+#             */
-/*   Updated: 2025/01/31 08:09:39 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:39:05 by pedroribeir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stacks.h"
-#include "stdlib.h"
+#include <stdlib.h>
 
-void	push_stack(t_stack *stack, int val)
+void	push_stack(t_stack *stack, int val, int index)
 {
 	t_node	*new_node;
 
@@ -23,22 +23,21 @@ void	push_stack(t_stack *stack, int val)
 	if (!new_node)
 		return ;
 	new_node->value = val;
+	new_node->index = index;
 	new_node->next = stack->top;
 	stack->top = new_node;
 	stack->size++;
 }
 
-int	pop_stack(t_stack *stack)
+t_node	*pop_stack(t_stack *stack)
 {
-	t_node	*temp;
-	int		popped_value;
+	t_node	*node;
 
 	if (!stack || !stack->top)
-		return (0);
-	temp = stack->top;
-	popped_value = temp->value;
-	stack->top = temp->next;
-	free(temp);
+		return (NULL);
+	node = stack->top;
+	stack->top = node->next;
+	node->next = NULL;
 	stack->size--;
-	return (popped_value);
+	return (node);
 }
