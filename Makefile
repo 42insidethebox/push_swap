@@ -6,7 +6,7 @@
 #    By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 16:14:20 by procha-r          #+#    #+#              #
-#    Updated: 2025/05/02 21:12:03 by procha-r         ###   ########.fr        #
+#    Updated: 2025/05/07 15:09:03 by procha-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRCS = \
 	src/utils/parsing_helpers.c \
 	src/utils/assign_index.c \
 	src/utils/sorting_helpers.c \
-	src/utils/sorting_helpers_3.c \
 	src/utils/ops_rotate_helpers.c \
 	src/utils/is_sorted.c \
 	src/utils/ft_split.c \

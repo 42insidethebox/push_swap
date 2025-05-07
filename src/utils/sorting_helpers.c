@@ -6,7 +6,7 @@
 /*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 22:43:07 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 20:22:21 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:10:09 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,4 @@ void	quick_sort(int *arr, int low, int high)
 		quick_sort(arr, low, pivot - 1);
 		quick_sort(arr, pivot +1, high);
 	}
-}
-
-int	find_max(t_stack *stack)
-{
-	t_node	*current;
-	int		max;
-
-	if (!stack || !stack->top)
-		return (-2147483648);
-	current = stack->top;
-	max = current->value;
-	while (current)
-	{
-		if (current->value > max)
-			max = current->value;
-		current = current->next;
-	}
-	return (max);
 }

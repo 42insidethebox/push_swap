@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedroribeiro <pedroribeiro@student.42.f    +#+  +:+       +#+        */
+/*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:30:04 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 17:24:17 by pedroribeir      ###   ########.fr       */
+/*   Updated: 2025/05/07 14:56:39 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,31 @@ void	sort_stack(t_stack *a, t_stack *b)
 		radix_sort(a, b);
 }
 
+static void	run_push_swap(t_stack *a, t_stack *b, t_input *in)
+{
+	if (check_duplicates(a))
+	{
+		print_error();
+		if (in->is_split)
+			ft_free_split(in->args);
+		handle_exit(a, b);
+	}
+	if (is_sorted(a))
+	{
+		if (in->is_split)
+			ft_free_split(in->args);
+		free_stack(a);
+		free_stack(b);
+		exit(0);
+	}
+	assign_index(a);
+	sort_stack(a, b);
+	if (in->is_split)
+		ft_free_split(in->args);
+	free_stack(a);
+	free_stack(b);
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack		a;
@@ -42,26 +67,11 @@ int	main(int argc, char **argv)
 	if (!in.args || in.count == 0)
 		handle_exit(&a, &b);
 	parse_result = parse_input(in.args, &a, in.count);
-	if (parse_result == -1 || check_duplicates(&a))
+	if (parse_result == -1)
 	{
 		print_error();
-		if (in.is_split)
-			ft_free_split(in.args);
 		handle_exit(&a, &b);
 	}
-	if (is_sorted(&a))
-	{
-		if (in.is_split)
-			ft_free_split(in.args);
-		free_stack(&a);
-		free_stack(&b);
-		return (0);
-	}
-	assign_index(&a);
-	sort_stack(&a, &b);
-	if (in.is_split)
-		ft_free_split(in.args);
-	free_stack(&a);
-	free_stack(&b);
+	run_push_swap(&a, &b, &in);
 	return (0);
 }

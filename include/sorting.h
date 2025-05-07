@@ -6,7 +6,7 @@
 /*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:57:16 by procha-r          #+#    #+#             */
-/*   Updated: 2025/05/02 20:15:11 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:09:47 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int		partition(int *arr, int low, int high);
 int		find_min(t_stack *stack);
 int		find_max(t_stack *stack);
 int		find_max_index(t_stack *stack);
-
-int		contains_in_chunk(t_stack *a, int lo, int hi);
-int		find_nearest_pos(t_stack *a, int lo, int hi);
-void	rotate_a_to_pos(t_stack *a, int pos);
-int		find_max_pos(t_stack *b);
-void	rotate_b_to_max(t_stack *b);
 
 void	push_chunk_to_b_big(t_stack *a, t_stack *b, int lo, int hi);
 void	pull_b_to_a(t_stack *a, t_stack *b);

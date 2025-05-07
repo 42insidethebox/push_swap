@@ -6,22 +6,19 @@
 /*   By: procha-r <procha-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:38:06 by pedroribeir       #+#    #+#             */
-/*   Updated: 2025/05/02 20:02:47 by procha-r         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:58:20 by procha-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdlib.h>
 
-void	assign_index(t_stack *stack)
+static int	*extract_values(t_stack *stack)
 {
 	int		*values;
 	t_node	*current;
 	int		i;
-	int		j;
 
-	if (!stack || stack->size == 0)
-		return ;
 	values = malloc(sizeof(int) * stack->size);
 	if (!values)
 		handle_exit(stack, NULL);
@@ -32,7 +29,14 @@ void	assign_index(t_stack *stack)
 		values[i++] = current->value;
 		current = current->next;
 	}
-	quick_sort(values, 0, stack->size - 1);
+	return (values);
+}
+
+static void	assign_sorted_indices(t_stack *stack, int *values)
+{
+	t_node	*current;
+	int		j;
+
 	current = stack->top;
 	while (current)
 	{
@@ -48,5 +52,16 @@ void	assign_index(t_stack *stack)
 		}
 		current = current->next;
 	}
+}
+
+void	assign_index(t_stack *stack)
+{
+	int		*values;
+
+	if (!stack || stack->size == 0)
+		return ;
+	values = extract_values(stack);
+	quick_sort(values, 0, stack->size - 1);
+	assign_sorted_indices(stack, values);
 	free(values);
 }
